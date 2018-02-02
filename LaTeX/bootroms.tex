@@ -593,7 +593,7 @@ As mentioned previously, knowledge of these flaws alone is not sufficient to
 perform an attack. This is because the critical flaw allows for the the use of
 crafted length fields to modify where the parser looks for the embedded hash on
 the stack, which is only useful if the parser can be made to look at the
-calculated hash. This requies knowledge of both which length fields are
+calculated hash. This requires knowledge of both which length fields are
 improperly verified and where in the stack the calculated signature is located.
 The first approach to try is to search for possible re-use of the flawed
 signature parser elsewhere.
