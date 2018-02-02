@@ -683,16 +683,16 @@ method nearly doubles the speed of our search.
 Another way to improve the speed of our search is to take advantage of the
 second and third flaw in the padding checks of Boot9's signature parser. Because
 we do not have to adhere to strict padding checks, an `RSA Multiplicative
-Attack' is possible. This lets us determine that, if \(s_{a}\) and \(s_{b}\) are
-signatures for messages \(a\) and \(b\), then \(s_{a}s_{b} \pmod{n}\) is a
-signature for message \(ab \pmod{n}\). This results in another significant
-performance gain. This results in the following brute-force search method:
+Attack' is possible: if \(s_{a}\) and \(s_{b}\) are signatures for messages
+\(a\) and \(b\), then \(s_{a}s_{b} \pmod{n}\) is a signature for message \(ab
+\pmod{n}\). This results in another significant performance gain. This results
+in the following brute-force search method:
 
 \medskip
 \begin{enumerate}
   \item Select random root \(r\) such that \(1 < r < n\)
   \item Calculate multiplier \(k\) such that \(k = r^{65537} \pmod{n}\)
-  \item Set \(y = k\) and \(z = 0\)
+  \item Set \(y = 1\) and \(z = 0\)
   \item Define parameters for validity (based on 128 possible locations)
   \item Loop:
     \begin{enumerate}
@@ -700,11 +700,11 @@ performance gain. This results in the following brute-force search method:
       \item Perform \(y = (y * k) \pmod{n}\)
       \item Check whether \(y\) is valid
         \begin{itemize}
-          \item Return \(y \equiv r^{z} \pmod{n}\)
+          \item Return \(r^{z} \pmod{n}\)
         \end{itemize}
       \item Check whether \(n - y\) is valid
         \begin{itemize}
-          \item Return \(y \equiv -r^{z} \pmod{n}\)
+          \item Return \(-r^{z} \pmod{n}\)
         \end{itemize}
     \end{enumerate}
 \end{enumerate}
@@ -831,7 +831,7 @@ Because this NDMA copy is triggered by the loading of the firmware section, it
 occurs before access to Boot9 is disabled. We gave this copy request a firmware
 section header which loaded it to the NDMA registers, then placed in a
 fakesigned firmware image which would boot normally after performing the
-request. We were then able to successfully retreive the protected half of Boot9
+request. We were then able to successfully retrieve the protected half of Boot9
 from ARM9 memory after the boot completed.
 
 \section{Code Execution}
